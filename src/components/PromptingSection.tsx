@@ -30,10 +30,10 @@ const PromptingSection = ({
 }: Props) => {
     const togglePanel = (e: React.MouseEvent<HTMLElement, MouseEvent>, idx: number) => {
         e.stopPropagation();
-        if(openPanel == "prompt" && idx === panelData.promptIdx) {
+        if(openPanel === "prompt" && idx === panelData.promptIdx) {
             setOpenPanel("");
             setPanelData({});
-        } else if(openPanel == "prompt") {
+        } else if(openPanel === "prompt") {
             setPanelData({promptIdx: idx});
         } else {
             setOpenPanel("prompt");
@@ -69,7 +69,7 @@ const PromptingSection = ({
                                 disabled={disabled || promptId.includes("<PREDEFINED_PROMPT_")}
                             />
                             <ButtonContainer idx={idx}>
-                                {section == "develop" && (
+                                {section === "develop" && (
                                     <div>
                                         <i 
                                             className="fa-solid fa-plus"

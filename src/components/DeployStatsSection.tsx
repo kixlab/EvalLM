@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { Criterion, DataEntry, EvaluationData } from '../types';
@@ -81,9 +81,9 @@ const calculateFleissKappa = (data: number[][], r: number) => {
     }
     const P_bar = P_i.reduce((a, b) => a + b, 0) / n;
     const P_e = p_j.reduce((a, b) => a + b ** 2, 0);
-    if(P_e == 1 && P_bar == 1) {
+    if(P_e === 1 && P_bar === 1) {
         return 1;
-    } else if(P_e == 1) {
+    } else if(P_e === 1) {
         return 0;
     }
     return (P_bar - P_e) / (1 - P_e);
@@ -114,22 +114,22 @@ const calculateCohenKappa = (data: number[][]) => {
 
     var p_o = 0;
     for(let i = 0; i < n; i++) {
-        p_o += data[i][0] == data[i][1] ? 1 : 0;
+        p_o += data[i][0] === data[i][1] ? 1 : 0;
     }
     p_o /= n;
 
     var p_e = 0;
     for(let i = 0; i < k; i++) {
-        const n1 = data.reduce((a, b) => a + (b[0] == i ? 1 : 0), 0);
-        const n2 = data.reduce((a, b) => a + (b[1] == i ? 1 : 0), 0);
+        const n1 = data.reduce((a, b) => a + (b[0] === i ? 1 : 0), 0);
+        const n2 = data.reduce((a, b) => a + (b[1] === i ? 1 : 0), 0);
         p_e += (n1 * n2);
     }
 
     p_e /= (n * n);
 
-    if(p_e == 1 && p_o == 1) {
+    if(p_e === 1 && p_o === 1) {
         return 1;
-    } else if(p_e == 1) {
+    } else if(p_e === 1) {
         return 0;
     }
 
@@ -175,7 +175,7 @@ const DeployStatsSection = ({
 
     const createBarChartPortion = (label: string, percentage: number, color: string, index?: number, data?: any) => {
         if(index === undefined) index = 0;
-        if(color == "") {
+        if(color === "") {
             return (
                 <BarChartPortion 
                     key={index} 
@@ -187,9 +187,9 @@ const DeployStatsSection = ({
             )
         } else {
             const isActive = deployFilter !== null &&
-                deployFilter.type == data.type &&
-                deployFilter.criteriaId == data.criteriaId &&
-                deployFilter.section == data.section;
+                deployFilter.type === data.type &&
+                deployFilter.criteriaId === data.criteriaId &&
+                deployFilter.section === data.section;
             return (
                 <BarChartPortion 
                     key={index} 
@@ -201,7 +201,7 @@ const DeployStatsSection = ({
                         setDeployFilter(isActive ? null : data);
                     }}
                 >
-                    {label == "" ? Math.round(percentage*100)+'%' : label}
+                    {label === "" ? Math.round(percentage*100)+'%' : label}
                 </BarChartPortion>
             )
         }
@@ -234,7 +234,7 @@ const DeployStatsSection = ({
             if (dataEntry.area === "test") continue;
             const { evaluations } = dataEntry;
             for(let j = 0; j < evaluations.length; j++) {
-                const { criterion, overallWinner, winners } = evaluations[j];
+                const { criterion, overallWinner } = evaluations[j];
                 if(overallWinner === -1) {
                     statistics[criterion.id]['missing']++;
                     continue;
@@ -259,7 +259,7 @@ const DeployStatsSection = ({
                 statComponents.push(
                     <StatsRow key={i}>
                         {percentages.map((percentage, index) => {
-                            if(percentage == 0) return null;
+                            if(percentage === 0) return null;
                             var colorWheel = ["#0088FF", "#CCCCCC", "#FDA946"];
                             var sectionInfo = ["prompt1", "tie", "prompt2"]
                             if(index !== 3) {
@@ -334,7 +334,7 @@ const DeployStatsSection = ({
                 statComponents.push(
                     <StatsRow key={i}>
                         {percentages.map((percentage, index) => {
-                            if(percentage == 0) return null;
+                            if(percentage === 0) return null;
                             var colorWheel = ["#59B668", "#59B66855", "#dddddd"];
                             var sectionInfo = ['agree', 'majority', 'disagree']
                             if(index !== 3) {
@@ -436,7 +436,7 @@ const DeployStatsSection = ({
                 combinedData[id] = [];
                 var agreement = 0;
                 for(let j = 0; j < winnersAggregate.length; j++) {
-                    if(winnersAggregate[j] == -1 || altWinnersAggregate[j] == -1) continue;
+                    if(winnersAggregate[j] === -1 || altWinnersAggregate[j] === -1) continue;
                     if(winnersAggregate[j] === altWinnersAggregate[j]) {
                         agreement++;
                     }
@@ -448,7 +448,7 @@ const DeployStatsSection = ({
                 statComponents.push(
                     <StatsRow key={i}>
                         {percentages.map((percentage, index) => {
-                            if(percentage == 0) return null;
+                            if(percentage === 0) return null;
                             var colorWheel = ["#59B668", "#dddddd"];
                             var sectionInfo = ['agree', 'disagree']
                             if(index !== 2) {

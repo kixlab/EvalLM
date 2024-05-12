@@ -6,7 +6,7 @@ EvalLM is an interactive interface that allows users to compare and refine promp
 
 ![](./media/teaser.gif)
 
-[**Live Demo**](https://evallm.kixlab.org/demo) (An OpenAI, Anthropic or Google API key is needed.) | [**CHI 2024 Paper**](https://doi.org/10.1145/3613904.3642216) | [**Website**](https://evallm.kixlab.org/)
+[**Live Demo**](https://evallm.kixlab.org/demo) (An OpenAI API Key is needed.) | [**CHI 2024 Paper**](https://doi.org/10.1145/3613904.3642216) | [**Website**](https://evallm.kixlab.org/)
 
 ## Development
 

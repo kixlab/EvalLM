@@ -14,7 +14,7 @@ const checkEqualObj = (data1: any, data2: any) => {
     const isPrompt = data1[keys[0]].includes('p');
 
     for(var i = 0; i < keys.length; i++) {
-        if(isPrompt && keys[i] == 'name') continue;
+        if(isPrompt && keys[i] === 'name') continue;
         if(data1[keys[i]] !== data2[keys[i]]) {
             return false;
         }
@@ -50,13 +50,13 @@ const summarizeHistory = (history: DataEntry[]) => {
         const prompts = entry.outputs.map((o) => o.prompt);
         const criteria = entry.evaluations.map((e) => e.criterion);
 
-        if(section == "develop" && area == "test") return;
+        if(section === "develop" && area === "test") return;
 
-        var closestSectionIdxRev = results.reverse().findIndex((r) => r.section == section);
-        var closestSectionIdx = closestSectionIdxRev == -1 ? -1 : results.length - closestSectionIdxRev - 1;
+        var closestSectionIdxRev = results.reverse().findIndex((r) => r.section === section);
+        var closestSectionIdx = closestSectionIdxRev === -1 ? -1 : results.length - closestSectionIdxRev - 1;
     
         if(
-            closestSectionIdx == -1 || 
+            closestSectionIdx === -1 || 
             !checkEqualList(results[closestSectionIdx].prompts, prompts) ||
             !checkEqualList(results[closestSectionIdx].criteria, criteria)
         ) {
@@ -104,7 +104,7 @@ const EvaluationHistory = ({
 
     const handleSelectInfo = (e: any, idx: number, type: string, id: string) => {
         e.stopPropagation();
-        if(selectedInfo.idx == idx && selectedInfo.type == type && selectedInfo.id == id) {
+        if(selectedInfo.idx === idx && selectedInfo.type === type && selectedInfo.id === id) {
             setSelectedInfo({idx: -1, type: "", id: ""});
             return;
         }
@@ -141,7 +141,7 @@ const EvaluationHistory = ({
                             </EvaluationContainer>
                             <div></div>
                         </CriteriaRow>,
-                        selectedInfo.idx == i && selectedInfo.type == "criteria" && selectedInfo.id == c.id && (
+                        selectedInfo.idx === i && selectedInfo.type === "criteria" && selectedInfo.id === c.id && (
                             <AdditionalInfo onClick={(e) => e.stopPropagation()}>
                                 <InfoHeader>
                                     Criteria:&nbsp; 
@@ -155,15 +155,15 @@ const EvaluationHistory = ({
                     ];
                 });
 
-                const section = data.section == "deploy" ? "Deployment" : "Development";
-                const changedSection = i == 0 || (summary[i-1].section == "deploy" ? "Deployment" : (summary[i-1].area == "test" ? "Validation" : "Development")) != section;
+                const section = data.section === "deploy" ? "Deployment" : "Development";
+                const changedSection = i === 0 || (summary[i-1].section === "deploy" ? "Deployment" : (summary[i-1].area === "test" ? "Validation" : "Development")) !== section;
 
                 const isSamePrompt1 = i > 0 && checkEqualObj(prompts[0], summary[i-1].prompts[0]);
                 const isSamePrompt2 = i > 0 && checkEqualObj(prompts[1], summary[i-1].prompts[1]);
 
                 return [
                     changedSection && (
-                        <SectionSeparator style={i == 0 ? {marginTop: "0px"} : {}}>
+                        <SectionSeparator style={i === 0 ? {marginTop: "0px"} : {}}>
                             {section}
                             <div></div>
                         </SectionSeparator>
@@ -206,7 +206,7 @@ const EvaluationHistory = ({
                             }
                         </div>
                     </PromptRow>,
-                    selectedInfo.idx == i && selectedInfo.type == "prompt" && selectedInfo.id == prompts[0].id && (
+                    selectedInfo.idx === i && selectedInfo.type === "prompt" && selectedInfo.id === prompts[0].id && (
                         <AdditionalInfo onClick={(e) => e.stopPropagation()}>
                             <InfoHeader>
                                 Prompt:&nbsp;
@@ -218,7 +218,7 @@ const EvaluationHistory = ({
                             </InfoContent>
                         </AdditionalInfo>
                     ),
-                    selectedInfo.idx == i && selectedInfo.type == "prompt" && selectedInfo.id == prompts[1].id && (
+                    selectedInfo.idx === i && selectedInfo.type === "prompt" && selectedInfo.id === prompts[1].id && (
                         <AdditionalInfo onClick={(e) => e.stopPropagation()}>
                             <InfoHeader>
                                 Prompt:&nbsp;

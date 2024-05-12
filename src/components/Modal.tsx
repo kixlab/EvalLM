@@ -137,7 +137,7 @@ const Modal = ({ isModalOpen, setIsModalOpen } : Props) => {
     const { apiKeys, setApiKey } = useContext(GenerateContext);
 
     const closeModal = () => {
-        if(apiKeys["openai"] === "" && apiKeys["anthropic"] === "" && apiKeys["google"] === "") {
+        if(apiKeys["openai"] === "") {
             return;
         }
         setIsModalOpen(false);
@@ -153,7 +153,7 @@ const Modal = ({ isModalOpen, setIsModalOpen } : Props) => {
                         <span>E<span style={{fontSize: "16px"}}>VAL</span>LM</span>
                     </Title>
                     <div style={{width: "18px"}}>
-                        {(apiKeys['openai'] !== "" || apiKeys['anthropic'] !== "" || apiKeys['google'] !== "") &&
+                        {(apiKeys['openai'] !== "") &&
                             <CloseButton className="fa-solid fa-xmark" onClick={() => closeModal()}></CloseButton>
                         }
                     </div>
@@ -162,6 +162,10 @@ const Modal = ({ isModalOpen, setIsModalOpen } : Props) => {
                     <Button href="https://arxiv.org/abs/2309.13633" target="_blank">
                         Paper
                         <i className="fa-solid fa-file-lines" style={{marginLeft: "8px"}}></i>
+                    </Button>
+                    <Button href="https://github.com/kixlab/EvalLM" target="_blank">
+                        Code
+                        <i className="fa-brands fa-github" style={{marginLeft: "8px"}}></i>
                     </Button>
                     <Button href="https://evallm.kixlab.org" target="_blank">
                         Website
@@ -225,8 +229,10 @@ const Modal = ({ isModalOpen, setIsModalOpen } : Props) => {
                         onChange={(e) => setApiKey("google", e.target.value)} 
                     />
                 </InputContainer>
-                <Description style={{textAlign: "center", color: "#999"}}>
-                    You will be able to close this modal after entering at least one API key.
+                <Description style={{textAlign: "center", color: "#999", gap: "0px"}}>
+                    <span>Currently, evaluation and generation is performed with <code>gpt-4-turbo-2024-04-09</code>.</span>
+                    <span>You will be able to close this modal after entering the OpenAI API key.</span>
+                    <span>Add Anthropic or Google API keys for alternative evaluators in the Deploy screen.</span>
                 </Description>
             </ModalContainer>
         </Background>

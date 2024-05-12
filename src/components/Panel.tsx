@@ -39,8 +39,8 @@ const Panel = ({
     history
 }: Props) => {
     useEffect(() => {
-        if(direction == "left") {
-            if(openPanel == "prompt" || openPanel == "sampling") {
+        if(direction === "left") {
+            if(openPanel === "prompt" || openPanel === "sampling") {
                 const panel = document.getElementById('panel-left');
                 if(!panel) return;
                 // move panel to right of the input container
@@ -70,7 +70,7 @@ const Panel = ({
                 panel.style.right = "-400px";
             }
         }
-    }, [openPanel]);
+    }, [openPanel, direction]);
 
     const leftPanelConstructor = () => {
         var panel = <><PanelTitle></PanelTitle><PanelContent></PanelContent></>;
@@ -78,7 +78,7 @@ const Panel = ({
             panel = (<>
                 <PanelTitle>
                     Select 
-                    <span style={{backgroundColor: panelData.promptIdx === 0 ? "#0088FF" : "#FDA946"}}>{panelData.promptIdx == 0 ? "First" : "Second"}</span> 
+                    <span style={{backgroundColor: panelData.promptIdx === 0 ? "#0088FF" : "#FDA946"}}>{panelData.promptIdx === 0 ? "First" : "Second"}</span> 
                     Prompt
                 </PanelTitle>
                 <PanelContent>
@@ -89,7 +89,7 @@ const Panel = ({
                                 <PromptPanelItem
                                     key={prompt.id}
                                     disabled={true}
-                                    color={idxInSelected == 0 ? "#0088FF" : "#FDA946"}
+                                    color={idxInSelected === 0 ? "#0088FF" : "#FDA946"}
                                 >
                                     <div>{prompt.name}</div>
                                     <div>{prompt.systemPrompt}</div>
@@ -148,7 +148,7 @@ const Panel = ({
                                     <div>{criterion.description}</div>
                                     <div>
                                         From&nbsp; 
-                                        <a href={criterion.reference} target="_blank" onClick={(e) => e.stopPropagation()}>
+                                        <a href={criterion.reference} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
                                             "{criterion.paper}"
                                         </a>
                                     </div>
@@ -161,7 +161,7 @@ const Panel = ({
                                     <div>{criterion.description}</div>
                                     <div>
                                         From&nbsp;
-                                        <a href={criterion.reference} target="_blank" onClick={(e) => e.stopPropagation()}>
+                                        <a href={criterion.reference} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
                                             "{criterion.paper}"
                                         </a>
                                     </div>
@@ -186,13 +186,13 @@ const Panel = ({
     return (
         <PanelContainer 
             id={'panel-' + direction}
-            style={direction == "left" ? 
+            style={direction === "left" ? 
                 {left: "-400px", boxShadow: "2px 2px 4px 0 rgba(0,0,0,0.1)"} : 
                 {right: "400px", boxShadow: "-2px 2px 4px 0 rgba(0,0,0,0.1)"}
             }
             onClick={(e: React.MouseEvent<HTMLElement, MouseEvent>) => e.stopPropagation()}
         >
-            {direction == "left" ? leftPanelConstructor() : rightPanelConstructor()}
+            {direction === "left" ? leftPanelConstructor() : rightPanelConstructor()}
         </PanelContainer>
     )
 }
