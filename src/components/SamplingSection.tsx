@@ -52,7 +52,8 @@ const SamplingSection = ({
                 // choose a random cluster
                 const randomNum = Math.random();
                 const clusterIdx = cumProbabilities.findIndex((cumProb) => cumProb > randomNum);
-                const cluster = availableClusters[clusterIdx];
+                const cluster = availableClusters[clusterIdx];                
+                if(cluster === undefined) break;
                 if(cluster.length === 0) continue;
                 // choose a random input from the cluster that is not in used
                 const inputIdx = Math.floor(Math.random() * cluster.length);
