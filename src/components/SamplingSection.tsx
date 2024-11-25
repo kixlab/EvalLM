@@ -38,34 +38,39 @@ const SamplingSection = ({
 
     const sampleDiversely = () => {
         var availableClusters = inputClusters.map((cluster) => cluster.filter((inputId) => !sampledInputIds.includes(inputId)));
-        var totalN = availableClusters.reduce((acc, cluster) => acc + cluster.length, 0);
-        var probabilities: number[] = availableClusters.map((cluster) => cluster.length / totalN);
-        var cumProbabilities: number[] = [];
-        probabilities.forEach((prob, idx) => {
-            cumProbabilities.push(prob);
-            if(idx !== 0) {
-                cumProbabilities[idx] += cumProbabilities[idx - 1];
+        var availableCt = 0; // new variable for available clusters
+        availableClusters.forEach((element) => {if(element.length !== 0) availableCt += 1});
+        if(numSamples <= availableCt) { // checks if we still can add more clusters
+            var totalN = availableClusters.reduce((acc, cluster) => acc + cluster.length, 0);
+            var probabilities: number[] = availableClusters.map((cluster) => cluster.length / totalN);
+            var cumProbabilities: number[] = [];
+            probabilities.forEach((prob, idx) => {
+                cumProbabilities.push(prob);
+                if(idx !== 0) {
+                    cumProbabilities[idx] += cumProbabilities[idx - 1];
+                }
+            })
+
+            var sampledInputs: InputData[] = [];
+            while(true) {
+                // choose a random cluster
+                const randomNum = Math.random();
+                const clusterIdx = cumProbabilities.findIndex((cumProb) => cumProb > randomNum);
+                const cluster = availableClusters[clusterIdx];
+                if(cluster === undefined) break; // check for valid cluster
+                if(cluster.length === 0) continue;
+                // choose a random input from the cluster that is not in used
+                const inputIdx = Math.floor(Math.random() * cluster.length);
+                const inputId = cluster[inputIdx];
+                if(sampledInputs.some((data) => data.id === inputId)) continue;
+                sampledInputs.push(inputSet.find((inputData) => inputData.id === inputId)!);
+                // remove the input from the available clusters
+                availableClusters[clusterIdx].splice(inputIdx, 1);
+
+                if(sampledInputs.length === numSamples) break;
             }
-        })
-
-        var sampledInputs: InputData[] = [];
-        while(true) {
-            // choose a random cluster
-            const randomNum = Math.random();
-            const clusterIdx = cumProbabilities.findIndex((cumProb) => cumProb > randomNum);
-            const cluster = availableClusters[clusterIdx];
-            if(cluster.length === 0) continue;
-            // choose a random input from the cluster that is not in used
-            const inputIdx = Math.floor(Math.random() * cluster.length);
-            const inputId = cluster[inputIdx];
-            if(sampledInputs.some((data) => data.id === inputId)) continue;
-            sampledInputs.push(inputSet.find((inputData) => inputData.id === inputId)!);
-            // remove the input from the available clusters
-            availableClusters[clusterIdx].splice(inputIdx, 1);
-
-            if(sampledInputs.length === numSamples) break;
+            addInputSamples(sampledInputs);
         }
-        addInputSamples(sampledInputs);
     }
 
     const openSamplingPanel = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
