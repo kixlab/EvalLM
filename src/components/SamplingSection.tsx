@@ -15,6 +15,7 @@ interface Props {
     setOpenPanel: (panel: string) => void;
     prompts: Prompt[];
     setPrompts: (prompts: Prompt[]) => void;
+    setSelectedPrompts: (promptIds: string[]) => void;
 }
 
 const SamplingSection = ({
@@ -28,7 +29,8 @@ const SamplingSection = ({
     openPanel,
     setOpenPanel,
     prompts,
-    setPrompts
+    setPrompts,
+    setSelectedPrompts
 }: Props) => {
     const [numSamples, setNumSamples] = useState<number>(3);
     const fileUploadRef = useRef<HTMLInputElement>(null);
@@ -117,14 +119,15 @@ const SamplingSection = ({
                     setPrompts([...prompts, {
                         id: "<PREDEFINED_PROMPT_1>",
                         name: "Predefined Prompt 1",
-                        systemPrompt: "",
-                        userPrompt: "",
+                        systemPrompt: "-",
+                        userPrompt: "-",
                     }, {
                         id: "<PREDEFINED_PROMPT_2>",
                         name: "Predefined Prompt 2",
-                        systemPrompt: "",
-                        userPrompt: ""
-                    }])
+                        systemPrompt: "-",
+                        userPrompt: "-"
+                    }]);
+                    setSelectedPrompts(["<PREDEFINED_PROMPT_1>", "<PREDEFINED_PROMPT_2>"]);
                 }
 
                 setInputSet(newInputSet);

@@ -399,8 +399,8 @@ const Dashboard = () => {
                 outputs: input.outputs ? input.outputs.map((output, idx) => {
                     return {
                         prompt: {
-                            id: "<PREDEFINED_PROMPT_" + idx + ">",
-                            name: "Predefined Prompt " + idx,
+                            id: "<PREDEFINED_PROMPT_" + (idx + 1) + ">",
+                            name: "Predefined Prompt " + (idx + 1),
                             systemPrompt: "",
                             userPrompt: "",
                         },
@@ -1037,6 +1037,7 @@ const Dashboard = () => {
                     setOpenPanel={setOpenPanel}
                     prompts={prompts}
                     setPrompts={setPrompts}
+                    setSelectedPrompts={setSelectedPrompts}
                 />
             </InputContainer>,
             <DataContainer key="data" style={openPanel !== "" ? {filter: "brightness(80%)"} : {}}>
