@@ -230,7 +230,7 @@ const Modal = ({ isModalOpen, setIsModalOpen } : Props) => {
                     />
                 </InputContainer>
                 <Description style={{textAlign: "center", color: "#999", gap: "0px"}}>
-                    <span>Currently, evaluation and generation is performed with <code>gpt-4-turbo-2024-04-09</code>.</span>
+                    <span>Currently, evaluation and generation is performed with <code>gpt-4o-2024-11-20</code>.</span>
                     <span>You will be able to close this modal after entering the OpenAI API key.</span>
                     <span>Add Anthropic or Google API keys for alternative evaluators in the Deploy screen.</span>
                 </Description>

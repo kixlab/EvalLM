@@ -18,8 +18,8 @@ export const STATUS = {
 }
 
 export const DEFAULT_CONFIGS = {
-    "generate": { "temperature": 0.7, "model": "gpt-4-turbo-2024-04-09" },
-    "evaluate": { "temperature": 0.3, "model": "gpt-4-turbo-2024-04-09" }
+    "generate": { "temperature": 0.7, "model": "gpt-4o-2024-11-20" },
+    "evaluate": { "temperature": 0.3, "model": "gpt-4o-2024-11-20" }
 }
 
 export const PREDEFINED_CRITERIA = [
